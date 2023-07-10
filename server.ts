@@ -18,11 +18,19 @@ app.use(function (req, res, next) {
   next();
 });
 
+
 app.get('/', (req: Request, res: Response) => {
+  res.send(indexHTML());
+});
+
+app.get('/ssr', (req: Request, res: Response) => {
   // res.send('<div>Hello World!<div>');
   //res.sendFile(__dirname + '/public/views/index.html');
-  res.send(templateHTMLfile());
+  res.send(serverSideRenderedPage());
+});
 
+app.get('/csr', (req: Request, res: Response) => {
+  res.send(clientSideRenderedPage());
 });
 
 app.listen(port, () => {
@@ -42,7 +50,46 @@ type pokemonAPIresponse = {
 }
 
 
-function templateHTMLfile(){
+function indexHTML(){
+  const html = `<html>
+        <head>
+          <title>Renderwhere</title>
+          <meta name="description" content="">
+          <meta name="viewport" content="width=device-width, initial-scale=1">
+          <link rel="stylesheet" href="views/stylesheet.css">
+          <link rel="icon" href="assets/icon.png" />
+        </head>
+        <body>
+          <a href='/ssr'>Server-side rendering</a>
+          <br/>
+          <br/>
+          <a href='/csr'>Client-side rendering</a>
+          <script src="views/script.js"></script>
+        </body>
+      </html>`
+
+      return html;
+}
+
+function clientSideRenderedPage(){
+  const html = `<html>
+        <head>
+          <title>Renderwhere</title>
+          <meta name="description" content="">
+          <meta name="viewport" content="width=device-width, initial-scale=1">
+          <link rel="stylesheet" href="views/stylesheet.css">
+          <link rel="icon" href="assets/icon.png" />
+        </head>
+        <body>
+          <div id="root">
+          <script src="views/re@ct.js"></script>
+        </body>
+      </html>`
+
+      return html;
+}
+
+function serverSideRenderedPage(){
       console.log("responding");
       const url = "https://pokeapi.co/api/v2/pokemon?limit=20";
       // axios.get(url, {
