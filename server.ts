@@ -7,7 +7,8 @@ const app: Express = express();
 const port = process.env.PORT;
 
 app.get('/', (req: Request, res: Response) => {
-  res.send('<div>Hello World!<div>');
+  // res.send('<div>Hello World!<div>');
+  res.sendFile(__dirname + '/public/views/index.html');
 });
 
 app.listen(port, () => {
