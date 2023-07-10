@@ -125,7 +125,8 @@ function serverSideRenderedPage(){
           <link rel="icon" href="assets/icon.png" />
         </head>
         <body>
-          <div>Hello World!<div>
+          <h1>Server side rendering<h1>
+          <h3>The following numbers were generated on the server<h3>
           <div>Here are some random numbers: </div>
           ${randomNumberHTML}
           <script src="views/script.js"></script>
