@@ -84,10 +84,6 @@ async function getPokemon() {
     //should handle errors here
 }
 async function serverSideRenderedPage() {
-    const randomNumbers = new Array(10).fill("a").map((el) => {
-        return `<p>${Math.floor(Math.random() * 1000)}</p>`;
-    });
-    const randomNumberHTML = randomNumbers.join("");
     const html = `<html>
         <head>
           <title>Renderwhere</title>
