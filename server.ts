@@ -124,7 +124,7 @@ async function serverSideRenderedPage(){
         </head>
         <body>
           <h1>Server side rendering<h1>
-          <h3>The following numbers were generated on the server<h3>
+          <h3>The following numbers were generated on the server</h3>
           <div>Here are some pokemon: </div>
           ${await getPokemon()}
           <script src="views/script.js"></script>
