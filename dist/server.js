@@ -21,10 +21,11 @@ app.use(function (req, res, next) {
 app.get('/', (req, res) => {
     res.send(indexHTML());
 });
-app.get('/ssr', (req, res) => {
+app.get('/ssr', async (req, res) => {
     // res.send('<div>Hello World!<div>');
     //res.sendFile(__dirname + '/public/views/index.html');
-    res.send(serverSideRenderedPage());
+    const ssrPage = await serverSideRenderedPage();
+    res.send(ssrPage);
 });
 app.get('/csr', (req, res) => {
     res.send(clientSideRenderedPage());
@@ -67,22 +68,20 @@ function clientSideRenderedPage() {
       </html>`;
     return html;
 }
-function serverSideRenderedPage() {
+async function getPokemon() {
     console.log("responding");
-    const url = "https://pokeapi.co/api/v2/pokemon?limit=20";
-    // axios.get(url, {
-    //   headers: {
-    //     Accept: 'application/json',
-    //   },
-    // },)
-    //   .then((res: {data: pokemonAPIresponse}) => res.data)
-    //   .then((data: pokemonAPIresponse)  => {
-    //     console.log(data);
-    //     const pokemonData = data.results.map((pokemon: PokemonResult) => `<p>${pokemon.name}</p>`)
-    //     console.log(html)
-    //     return html;
-    //   })
-    //   .catch(err => console.log(err))
+    const url = "https://pokeapi.co/api/v2/pokemon?limit=150";
+    const { data } = await axios.get(url, {
+        headers: {
+            Accept: 'application/json',
+        },
+    });
+    console.log(data);
+    const pokemonData = data.results.map((pokemon) => `<p>${pokemon.name}</p>`).join("");
+    return pokemonData;
+    //should handle errors here
+}
+async function serverSideRenderedPage() {
     const randomNumbers = new Array(10).fill("a").map((el) => {
         return `<p>${Math.floor(Math.random() * 1000)}</p>`;
     });
@@ -98,8 +97,8 @@ function serverSideRenderedPage() {
         <body>
           <h1>Server side rendering<h1>
           <h3>The following numbers were generated on the server<h3>
-          <div>Here are some random numbers: </div>
-          ${randomNumberHTML}
+          <div>Here are some pokemon: </div>
+          ${await getPokemon()}
           <script src="views/script.js"></script>
         </body>
       </html>`;
