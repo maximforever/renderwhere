@@ -1,11 +1,11 @@
-import express, { Express, Request, Response } from 'express';
-import dotenv from 'dotenv';
+import express, { Express, Request, Response } from "express";
+import dotenv from "dotenv";
 
 dotenv.config();
 
-const axios = require('axios');                 // make http requests
-const bodyParser = require("body-parser");      // parse request body
-const path = require("path");                   // access paths
+const axios = require("axios"); // make http requests
+const bodyParser = require("body-parser"); // parse request body
+const path = require("path"); // access paths
 const app: Express = express();
 
 app.use(express.static(path.join(__dirname, "/public/")));
@@ -18,12 +18,11 @@ app.use(function (req, res, next) {
   next();
 });
 
-
-app.get('/', (req: Request, res: Response) => {
+app.get("/", (req: Request, res: Response) => {
   res.send(indexHTML());
 });
 
-app.get('/ssr', async (req: Request, res: Response) => {
+app.get("/ssr", async (req: Request, res: Response) => {
   // res.send('<div>Hello World!<div>');
   //res.sendFile(__dirname + '/public/views/index.html');
   const ssrPage = await serverSideRenderedPage();
@@ -31,7 +30,7 @@ app.get('/ssr', async (req: Request, res: Response) => {
   res.send(ssrPage);
 });
 
-app.get('/csr', (req: Request, res: Response) => {
+app.get("/csr", (req: Request, res: Response) => {
   res.send(clientSideRenderedPage());
 });
 
@@ -40,19 +39,18 @@ app.listen(port, () => {
 });
 
 type PokemonResult = {
-  name: string,
-  url: string
-}
+  name: string;
+  url: string;
+};
 
 type pokemonAPIresponse = {
-  count:  number,
-  next: string | null,
-  previous: string | null,
-  results: PokemonResult[],
-}
+  count: number;
+  next: string | null;
+  previous: string | null;
+  results: PokemonResult[];
+};
 
-
-function indexHTML(){
+function indexHTML() {
   const html = `<html>
         <head>
           <title>Renderwhere</title>
@@ -68,12 +66,12 @@ function indexHTML(){
           <a href='/csr'>Client-side rendering</a>
           <script src="views/script.js"></script>
         </body>
-      </html>`
+      </html>`;
 
-      return html;
+  return html;
 }
 
-function clientSideRenderedPage(){
+function clientSideRenderedPage() {
   const html = `<html>
         <head>
           <title>Renderwhere</title>
@@ -86,35 +84,37 @@ function clientSideRenderedPage(){
           <div id="root">
           <script src="views/re@ct.js"></script>
         </body>
-      </html>`
+      </html>`;
 
-      return html;
+  return html;
 }
 
-async function getPokemon(){
-    console.log("responding");
-    const url = "https://pokeapi.co/api/v2/pokemon?limit=150";
+async function getPokemon() {
+  console.log("responding");
+  const url = "https://pokeapi.co/api/v2/pokemon?limit=150";
 
-    const { data } = await axios.get(url, {
-      headers: {
-        Accept: 'application/json',
-      },
-    });
+  const { data } = await axios.get(url, {
+    headers: {
+      Accept: "application/json",
+    },
+  });
 
-    console.log(data);
-    const pokemonData = data.results.map((pokemon: PokemonResult) => `<p>${pokemon.name}</p>`).join("");
-    return pokemonData;
-    //should handle errors here
+  console.log(data);
+  const pokemonData = data.results
+    .map((pokemon: PokemonResult) => `<p>${pokemon.name}</p>`)
+    .join("");
+  return pokemonData;
+  //should handle errors here
 }
 
-async function serverSideRenderedPage(){
-      const randomNumbers = new Array(10).fill("a").map((el) => {
-        return `<p>${Math.floor(Math.random() * 1000)}</p>`
-      })
+async function serverSideRenderedPage() {
+  const randomNumbers = new Array(10).fill("a").map((el) => {
+    return `<p>${Math.floor(Math.random() * 1000)}</p>`;
+  });
 
-      const randomNumberHTML = randomNumbers.join("");
+  const randomNumberHTML = randomNumbers.join("");
 
-      const html = `<html>
+  const html = `<html>
         <head>
           <title>Renderwhere</title>
           <meta name="description" content="">
@@ -129,7 +129,7 @@ async function serverSideRenderedPage(){
           ${await getPokemon()}
           <script src="views/script.js"></script>
         </body>
-      </html>`
+      </html>`;
 
-      return html;
+  return html;
 }

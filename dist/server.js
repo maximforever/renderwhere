@@ -6,7 +6,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = __importDefault(require("express"));
 const dotenv_1 = __importDefault(require("dotenv"));
 dotenv_1.default.config();
-const axios = require('axios'); // make http requests
+const axios = require("axios"); // make http requests
 const bodyParser = require("body-parser"); // parse request body
 const path = require("path"); // access paths
 const app = (0, express_1.default)();
@@ -18,16 +18,16 @@ app.use(function (req, res, next) {
     console.log(`==> ${req.method.toUpperCase()} ${req.url} on ${date}`);
     next();
 });
-app.get('/', (req, res) => {
+app.get("/", (req, res) => {
     res.send(indexHTML());
 });
-app.get('/ssr', async (req, res) => {
+app.get("/ssr", async (req, res) => {
     // res.send('<div>Hello World!<div>');
     //res.sendFile(__dirname + '/public/views/index.html');
     const ssrPage = await serverSideRenderedPage();
     res.send(ssrPage);
 });
-app.get('/csr', (req, res) => {
+app.get("/csr", (req, res) => {
     res.send(clientSideRenderedPage());
 });
 app.listen(port, () => {
@@ -73,11 +73,13 @@ async function getPokemon() {
     const url = "https://pokeapi.co/api/v2/pokemon?limit=150";
     const { data } = await axios.get(url, {
         headers: {
-            Accept: 'application/json',
+            Accept: "application/json",
         },
     });
     console.log(data);
-    const pokemonData = data.results.map((pokemon) => `<p>${pokemon.name}</p>`).join("");
+    const pokemonData = data.results
+        .map((pokemon) => `<p>${pokemon.name}</p>`)
+        .join("");
     return pokemonData;
     //should handle errors here
 }
