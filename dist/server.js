@@ -22,10 +22,11 @@ app.get("/", (req, res) => {
     res.send(indexHTML());
 });
 app.get("/ssr", async (req, res) => {
-    // res.send('<div>Hello World!<div>');
-    //res.sendFile(__dirname + '/public/views/index.html');
-    const ssrPage = await serverSideRenderedPage();
-    res.send(ssrPage);
+    // add setTimeout for delay
+    setTimeout(async () => {
+        const ssrPage = await serverSideRenderedPage();
+        res.send(ssrPage);
+    }, 3000);
 });
 app.get("/csr", (req, res) => {
     console.log("CLIENT SIDE");

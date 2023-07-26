@@ -23,12 +23,15 @@ async function buildPage() {
   subheading.innerText = "The following numbers were generated on the server";
 
   root.appendChild(heading);
-  root.appendChild(subheading);
   root.appendChild(loadingDiv);
-  root.appendChild(wrapperDiv);
-  wrapperDiv.appendChild(innerDiv);
 
-  await fetchAndAppendPokemon(innerDiv, loadingDiv);
+  // add setTimeout for delay
+  setTimeout(async () => {
+    await fetchAndAppendPokemon(innerDiv, loadingDiv);
+    root.appendChild(subheading);
+    root.appendChild(wrapperDiv);
+    wrapperDiv.appendChild(innerDiv);
+  }, 3000);
 }
 
 async function fetchAndAppendPokemon(parentDiv, loadingDiv) {

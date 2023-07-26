@@ -23,11 +23,11 @@ app.get("/", (req: Request, res: Response) => {
 });
 
 app.get("/ssr", async (req: Request, res: Response) => {
-  // res.send('<div>Hello World!<div>');
-  //res.sendFile(__dirname + '/public/views/index.html');
-  const ssrPage = await serverSideRenderedPage();
-
-  res.send(ssrPage);
+  // add setTimeout for delay
+  setTimeout(async () => {
+    const ssrPage = await serverSideRenderedPage();
+    res.send(ssrPage);
+  }, 3000);
 });
 
 app.get("/csr", (req: Request, res: Response) => {
