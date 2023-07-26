@@ -36,6 +36,10 @@ app.get("/csr", (req: Request, res: Response) => {
   res.send(clientSideRenderedPage());
 });
 
+app.get("/hydration", (req: Request, res: Response) => {
+  res.sendFile(__dirname + "/public/views/hydration.html");
+});
+
 app.listen(port, () => {
   console.log(`Server is running at http://localhost:${port}`);
 });
@@ -66,6 +70,9 @@ function indexHTML() {
           <br/>
           <br/>
           <a href='/csr'>Client-side rendering</a>
+          <br/>
+          <br/>
+          <a href='/hydration'>Hydration</a>
           <script src="views/script.js"></script>
         </body>
       </html>`;
@@ -120,7 +127,7 @@ async function serverSideRenderedPage() {
         </head>
         <body>
           <h1>Server side rendering<h1>
-          <h3>Here are some pokemon we just fetched from the server</h3>
+          <h3>Here are some pokemon we just fetched from an API server-side</h3>
           <div>Here are some pokemon: </div>
           ${await getPokemon()}
           <script src="views/script.js"></script>

@@ -17,10 +17,12 @@ async function buildPage() {
   wrapperDiv.innerText = "Here are some pokemon:";
 
   loadingDiv.id = "loading";
+  loadingDiv.style.display = "block";
   loadingDiv.src = "assets/loading.gif";
 
   heading.innerText = "Client side rendering";
-  subheading.innerText = "The following numbers were generated on the server";
+  subheading.innerText =
+    "Here are some pokemon we just fetched from an API client-side";
 
   root.appendChild(heading);
   root.appendChild(loadingDiv);

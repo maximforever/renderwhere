@@ -2,3 +2,7 @@ body {
   background: rgb(244, 255, 244);
   color: olive;
 }
+
+#loading {
+  display: none;
+}
