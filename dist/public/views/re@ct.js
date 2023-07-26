@@ -1,29 +1,50 @@
 console.log("Ey, it's me, your buddy Re@ct");
 
-const root = document.getElementById("root");
+buildPage();
 
-if(root === null){
-  throw new Error("Can't run re@act without a root");
+async function buildPage() {
+  const root = document.getElementById("root");
+
+  if (root === null) {
+    throw new Error("Can't run re@act without a root");
+  }
+
+  const wrapperDiv = document.createElement("div");
+  const innerDiv = document.createElement("div");
+  const heading = document.createElement("h1");
+  const subheading = document.createElement("h3");
+  const loadingDiv = document.createElement("img");
+  wrapperDiv.innerText = "Here are some pokemon:";
+
+  loadingDiv.id = "loading";
+  loadingDiv.src = "assets/loading.gif";
+
+  heading.innerText = "Client side rendering";
+  subheading.innerText = "The following numbers were generated on the server";
+
+  root.appendChild(heading);
+  root.appendChild(subheading);
+  root.appendChild(loadingDiv);
+  root.appendChild(wrapperDiv);
+  wrapperDiv.appendChild(innerDiv);
+
+  await fetchAndAppendPokemon(innerDiv, loadingDiv);
 }
 
-const wrapperDiv = document.createElement("div");
-const innerDiv = document.createElement("div");
-const heading = document.createElement("h1");
-const subheading = document.createElement("h3");
-wrapperDiv.innerText = "Here are some random numbers:"
-innerDiv.innerHTML = createRandomNumbers();
-heading.innerText = "Client side rendering"
-subheading.innerText = "The following numbers were generated on the server"
+async function fetchAndAppendPokemon(parentDiv, loadingDiv) {
+  const url = "https://pokeapi.co/api/v2/pokemon?limit=150";
 
-root.appendChild(heading);
-root.appendChild(subheading);
-root.appendChild(wrapperDiv);
-wrapperDiv.appendChild(innerDiv);
-
-function createRandomNumbers(){
-  const randomNumbers = new Array(10).fill("a").map((el) => {
-    return `<p>${Math.floor(Math.random() * 1000)}</p>`
-  })
-
-  return randomNumbers.join("");
+  const pokemonData = await fetch(url)
+    .then((res) => res.json())
+    .then((res) => {
+      res.results.forEach((pokemon) => {
+        const pokemonDiv = document.createElement("p");
+        pokemonDiv.innerText = pokemon.name;
+        parentDiv.append(pokemonDiv);
+      });
+      loadingDiv.style.display = "none";
+    });
 }
+
+const url = window.location.href;
+console.log(url);

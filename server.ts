@@ -31,6 +31,7 @@ app.get("/ssr", async (req: Request, res: Response) => {
 });
 
 app.get("/csr", (req: Request, res: Response) => {
+  console.log("CLIENT SIDE");
   res.send(clientSideRenderedPage());
 });
 

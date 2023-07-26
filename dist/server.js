@@ -28,6 +28,7 @@ app.get("/ssr", async (req, res) => {
     res.send(ssrPage);
 });
 app.get("/csr", (req, res) => {
+    console.log("CLIENT SIDE");
     res.send(clientSideRenderedPage());
 });
 app.listen(port, () => {
