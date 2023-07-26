@@ -23,11 +23,12 @@ app.get("/", (req: Request, res: Response) => {
 });
 
 app.get("/ssr", async (req: Request, res: Response) => {
-  // add setTimeout for delay
+  const DELAY = 3000;
+  // change DELAY to throttle
   setTimeout(async () => {
     const ssrPage = await serverSideRenderedPage();
     res.send(ssrPage);
-  }, 3000);
+  }, DELAY);
 });
 
 app.get("/csr", (req: Request, res: Response) => {
@@ -119,7 +120,7 @@ async function serverSideRenderedPage() {
         </head>
         <body>
           <h1>Server side rendering<h1>
-          <h3>The following numbers were generated on the server</h3>
+          <h3>Here are some pokemon we just fetched from the server</h3>
           <div>Here are some pokemon: </div>
           ${await getPokemon()}
           <script src="views/script.js"></script>
