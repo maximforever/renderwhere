@@ -14,4 +14,7 @@ This is an Express/TS app. To run in dev:
 ENV="development"
 PORT="3000"
 ```
+
 2. `npm run dev`
+
+3. update the js pages in `public/views` for client-side code, or `server.ts` for server-side code.
