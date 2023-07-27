@@ -1,5 +1,7 @@
 console.log("Ey, it's me, your buddy Re@ct");
 
+const DELAY = 6000;
+
 buildPage();
 
 async function buildPage() {
@@ -33,7 +35,7 @@ async function buildPage() {
     root.appendChild(subheading);
     root.appendChild(wrapperDiv);
     wrapperDiv.appendChild(innerDiv);
-  }, 3000);
+  }, DELAY);
 }
 
 async function fetchAndAppendPokemon(parentDiv, loadingDiv) {

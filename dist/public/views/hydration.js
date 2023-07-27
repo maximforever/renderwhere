@@ -1,4 +1,5 @@
-const DELAY = 3000;
+const DELAY = 6000;
+const SHORT_DELAY = 2000;
 
 const fetchAndAppendPokemon = async () => {
   const loading = document.getElementById("loading");
@@ -11,7 +12,7 @@ const fetchAndAppendPokemon = async () => {
       setTimeout(() => {
         appendPokemon(res.results);
         loading.style.display = "none";
-      }, DELAY);
+      }, SHORT_DELAY);
     });
 };
 
@@ -26,11 +27,24 @@ const appendPokemon = (pokemon) => {
 };
 
 const addEventListeners = async () => {
-  setTimeout(async () => {
-    const button = document.getElementById("do-stuff");
-    button.innerText += " ✅";
-    button.addEventListener("click", await fetchAndAppendPokemon);
+  const button = document.getElementById("do-stuff");
+  button.innerText += " ✅";
+  button.addEventListener("click", await fetchAndAppendPokemon);
+};
+
+const makePikachuBouncy = () => {
+  const pikachu = document.getElementById("pikachu");
+  console.log(pikachu);
+  pikachu.classList.add("bouncy");
+};
+
+const enableJavascript = () => {
+  console.log("running!");
+  setTimeout(() => {
+    console.log("in setTimeout!");
+    addEventListeners();
+    makePikachuBouncy();
   }, DELAY);
 };
 
-addEventListeners();
+enableJavascript();

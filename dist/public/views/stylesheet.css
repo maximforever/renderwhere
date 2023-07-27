@@ -6,3 +6,26 @@ body {
 #loading {
   display: none;
 }
+
+#pikachu-wrapper {
+  height: 100px;
+  width: 100px;
+}
+
+#pikachu {
+  height: 60px;
+  padding-top: 20px;
+
+  &.bouncy {
+    animation: bounce 0.5s infinite linear;
+  }
+}
+
+@keyframes bounce {
+  0% {
+    margin-top: 0;
+  }
+  50% {
+    margin-top: -30px;
+  }
+}

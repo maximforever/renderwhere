@@ -22,7 +22,7 @@ app.get("/", (req, res) => {
     res.send(indexHTML());
 });
 app.get("/ssr", async (req, res) => {
-    const DELAY = 3000;
+    const DELAY = 6000;
     // change DELAY to throttle
     setTimeout(async () => {
         const ssrPage = await serverSideRenderedPage();
@@ -62,7 +62,8 @@ function indexHTML() {
     return html;
 }
 function clientSideRenderedPage() {
-    const html = `<html>
+    const html = `
+    <html>
         <head>
           <title>Renderwhere</title>
           <meta name="description" content="">
@@ -71,7 +72,7 @@ function clientSideRenderedPage() {
           <link rel="icon" href="assets/icon.png" />
         </head>
         <body>
-          <div id="root">
+          <div id="root"></div>
           <script src="views/re@ct.js"></script>
         </body>
       </html>`;
